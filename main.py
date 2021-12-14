@@ -12,14 +12,22 @@ messages = [772942520,1093541194,154481546,876676876,1244840390,1259928347,13341
 clePub=1452848381
 e=6991
 
-def findNbrPremier(n):
-    a = int(math.sqrt(n))
-    while True:
-        q = random.randint(3,a)
-        if q % 2 != 0:
-            if n % q == 0:
-                p = n // q
-                return q,p
+# def findNbrPremier(n):
+#     a = int(math.sqrt(n))
+#     while True:
+#         q = random.randint(3,a)
+#         if q % 2 != 0:
+#             if n % q == 0:
+#                 p = n // q
+#                 return q,p
+
+def trouverNbPremier(n):
+    moitie = int(math.sqrt(n))
+    for q in range(3, moitie):
+        if q%2!=0:
+            if n%q==0:
+                p= n//q
+                return p,q
 
 def euclide_etendu(a,b):
     if (b==0):
@@ -44,7 +52,10 @@ def exporapide(a,n):
     else:
         return b*b
 
-p,q=findNbrPremier(clePub)
+# p,q=findNbrPremier(clePub)
+#
+# print(findNbrPremier(clePub))
+p,q=trouverNbPremier(clePub)
 
 z=(p-1)*(q-1)
 

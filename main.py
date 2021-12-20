@@ -12,15 +12,6 @@ messages = [772942520,1093541194,154481546,876676876,1244840390,1259928347,13341
 clePub=1452848381
 e=6991
 
-# def findNbrPremier(n):
-#     a = int(math.sqrt(n))
-#     while True:
-#         q = random.randint(3,a)
-#         if q % 2 != 0:
-#             if n % q == 0:
-#                 p = n // q
-#                 return q,p
-
 def trouverNbPremier(n):
     moitie = int(math.sqrt(n))
     for q in range(3, moitie):
@@ -52,13 +43,27 @@ def exporapide(a,n):
     else:
         return b*b
 
-# p,q=findNbrPremier(clePub)
-#
-# print(findNbrPremier(clePub))
 p,q=trouverNbPremier(clePub)
 
 z=(p-1)*(q-1)
 
-euclide_etendu(6991,z)
+pgcd,x,y=euclide_etendu(6991,z)
 
+d=x%z
 
+def parcoursListe(liste, exposant, clePublique):
+    messageFinal= ""
+    for i in liste:
+        m = pow(i, exposant, clePublique)
+        # code = m.to_bytes(4, 'little')
+        # mess = code.decode("UTF-8")
+        messageFinal+=intToUtf8(m)
+    print(messageFinal)
+
+def intToUtf8(m):
+    m = str(hex(m)[2:]) # Prendre à partir du deuxiÃ¨me caractÃ¨re (aprÃ¨s le 0x)
+    m = "".join(reversed([m[i:i+2] for i in range(0, len(m), 2)])) # Inversion des octets 0x20654A ==> 0x4A6520
+    m = codecs.decode(m,"hex").decode('utf-8') # DÃ©codage
+    return m
+
+parcoursListe(messages,d,clePub)

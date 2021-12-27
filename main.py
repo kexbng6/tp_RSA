@@ -13,13 +13,13 @@ messages = [772942520,1093541194,154481546,876676876,1244840390,1259928347,13341
 clePub=1452848381
 e=6991
 
-"""
-Fonction retournant deux nb prem dont le produit est n
-:param n -> clé publique
-:var moitier ->
-:return les 2 nb prem
-"""
 def trouverNbPremier(n):
+    """
+    Fonction retournant deux nb prem dont le produit est n
+    :param n -> clé publique
+    :var moitier ->
+    :return les 2 nb prem
+    """
     moitie = int(math.sqrt(n))
     for q in range(3, moitie):
         if q%2!=0:
@@ -27,29 +27,29 @@ def trouverNbPremier(n):
                 p= n//q
                 return p,q
 
-"""
-Fonction retournant le pgcd et les coef de Bézout de 2 nb entier relatif
-:param a -> 1er entier relatif:
-:param b -> 2ème entier relatif: 
-:return 3 var->le pgcd et les 2 coef de Bézout
-"""
 def euclide_etendu(a,b):
+    """
+    Fonction retournant le pgcd et les coef de Bézout de 2 nb entier relatif
+    :param a -> 1er entier relatif:
+    :param b -> 2ème entier relatif:
+    :return 3 var->le pgcd et les 2 coef de Bézout
+    """
     if (b==0):
         return a,1,0
     else:
         (pgcd,u,v)= euclide_etendu(b, a%b)
         return (pgcd,v,u-(a//b)*v)
 
-"""
-Fonction qui calcule l'inv modulaire de 2 entiers
-:param a -> 1er entier relatif :
-:param m -> 2ème entier relatif :
-:var pgcd-> pgcd(a,m) retourné par la fct euclide_etendu()
-:var x -> coef de Bézout de a retourné par la fct euclide_etendu()
-:var y -> coef de Bézout de m retourné par la fct euclide_etendu()
-:return le coef de Bézout de a mod m
-"""
 def modinv(a, m):
+    """
+    Fonction qui calcule l'inv modulaire de 2 entiers
+    :param a -> 1er entier relatif :
+    :param m -> 2ème entier relatif :
+    :var pgcd-> pgcd(a,m) retourné par la fct euclide_etendu()
+    :var x -> coef de Bézout de a retourné par la fct euclide_etendu()
+    :var y -> coef de Bézout de m retourné par la fct euclide_etendu()
+    :return le coef de Bézout de a mod m
+    """
     pgcd, x, y = euclide_etendu(a, m)
     if pgcd != 1:
         raise Exception('L\'inverse modulaire n\'existe pas')#les 2 nb ne sont pas premiers entre eux
@@ -65,13 +65,13 @@ def modinv(a, m):
 #     else:
 #         return b*b
 
-"""
-Fonction permettant le calcul de puissance à l'aide de la récursivité basée sur l'algo d'exponentiation rapide
-:param a -> base
-:param n -> exposant
-:return -> a**n
-"""
 def exporapide(a,n):
+    """
+    Fonction permettant le calcul de puissance à l'aide de la récursivité basée sur l'algo d'exponentiation rapide
+    :param a -> base
+    :param n -> exposant
+    :return -> a**n
+    """
     if n == 1:
         return a
     elif n%2==0:
@@ -79,13 +79,14 @@ def exporapide(a,n):
     else:
         return a*exporapide(a*a,(n-1)/2)
 
-"""
-Fonction calculant la clé privé à partir d'un couple de nb prem d'une cle publique
-:var -> p,q = les 2 nb prem
-:z -> indicatrice d'Euler (phi de (n)) 
-:return -> clé privée
-"""
+
 def calculClePrivee():
+    """
+    Fonction calculant la clé privé à partir d'un couple de nb prem d'une cle publique
+    :var -> p,q = les 2 nb prem
+    :var z -> indicatrice d'Euler (phi de (n))
+    :return -> clé privée
+    """
     p, q = trouverNbPremier(clePub)
     z = (p - 1) * (q - 1)
     ##variante 1->on utilise le coef de Bézout de l'exposant mod l'indicatrice d'Euler pour trouver la clé privée:

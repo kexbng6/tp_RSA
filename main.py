@@ -69,7 +69,7 @@ def modinv(a, m):
 Fonction permettant le calcul de puissance à l'aide de la récursivité basée sur l'algo d'exponentiation rapide
 :param a -> base
 :param n -> exposant
-:return -> a^n
+:return -> a**n
 """
 def exporapide(a,n):
     if n == 1:
@@ -81,11 +81,13 @@ def exporapide(a,n):
 
 """
 Fonction calculant la clé privé à partir d'un couple de nb prem d'une cle publique
+:var -> p,q = les 2 nb prem
+:z -> indicatrice d'Euler (phi de (n)) 
 :return -> clé privée
 """
 def calculClePrivee():
     p, q = trouverNbPremier(clePub)
-    z = (p - 1) * (q - 1) #indicatrice d'Euler (phi de (n))
+    z = (p - 1) * (q - 1)
     ##variante 1->on utilise le coef de Bézout de l'exposant mod l'indicatrice d'Euler pour trouver la clé privée:
     #pgcd, x, y = euclide_etendu(e, z)
     #d = x % z

@@ -17,11 +17,11 @@ def trouverNbPremier(n):
     """
     Fonction retournant deux nb prem dont le produit est n
     :param n -> clé publique
-    :var moitier ->
+    :var racineCarre -> racine carrée du paramètre de la fonction n
     :return les 2 nb prem
     """
-    moitie = int(math.sqrt(n))
-    for q in range(3, moitie):
+    racineCarre = int(math.sqrt(n))
+    for q in range(3, racineCarre):
         if q%2!=0:
             if n%q==0:
                 p= n//q
@@ -56,14 +56,22 @@ def modinv(a, m):
     else:
         return x % m
 
-# def exporapide(a,n):
-#     if n==0:
-#         return 1
-#     b=exporapide(a,n//2)
-#     if (n%2)==1:
-#         return b*b*a
-#     else:
-#         return b*b
+def expoRapide(m, e, n):
+    """
+    Fonction permettant le calcul de puissance modulo un nombre n basée sur l'algo d'exponentiation rapide
+    -code inspiré de stackoverflow-> https://stackoverflow.com/questions/5246856/how-did-python-implement-the-built-in-function-pow
+    :param m -> base
+    :param e -> exposant
+    :param n -> modulo
+    :return -> reste de l'opération soit le mod de m**e%n
+    """
+    reste = 1
+    while e:
+        if e & 1:
+            reste = reste * m % n
+        e >>= 1
+        m = m * m % n
+    return reste
 
 def exporapide(a,n):
     """
@@ -105,8 +113,8 @@ def intToUtf8(m):
 def parcoursListe(liste, exposant, clePublique):
     messageFinal= ""
     for i in liste:
-        #m = exporapide(i,exposant)%clePublique
-        m = pow(i, exposant, clePublique)
+        m = expoRapide(i,exposant,clePublique)#exporapide(i,exposant)%clePublique
+        #m = pow(i, exposant, clePublique)
         # code = m.to_bytes(4, 'little')
         # mess = code.decode("UTF-8")
         messageFinal+=intToUtf8(m)

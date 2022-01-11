@@ -56,6 +56,32 @@ def modinv(a, m):
     else:
         return x % m
 
+def exporapide(a,x,n):
+    """
+    Fonction permettant le calcul de puissance modulo un nombre n
+    -code inspiré du cours du Dr.Eggenberg->maths 1 S1 Crypto
+    :param a -> base
+    :param x -> exposant
+    :param n -> modulo
+    :var y -> exposant mod 2
+    :var b -> la base mod n au carré mod n
+    :return r -> résultat de l'opération soit le mod de m**e%n
+    """
+    if a == 0:
+        r = 0
+        return r
+    elif x == 0:
+        r = 1
+        return r
+    r = 1
+    b = a % n
+    while (x>0):
+        y = x % 2
+        r = (r*b**y)%n
+        b = (b*b)%n
+        x = x//2
+    return r
+
 def expoRapide(m, e, n):
     """
     Fonction permettant le calcul de puissance modulo un nombre n basée sur l'algo d'exponentiation rapide
@@ -63,7 +89,7 @@ def expoRapide(m, e, n):
     :param m -> base
     :param e -> exposant
     :param n -> modulo
-    :return -> reste de l'opération soit le mod de m**e%n
+    :return r -> reste de l'opération soit le mod de m**e%n
     """
     reste = 1
     while e:
@@ -72,21 +98,6 @@ def expoRapide(m, e, n):
         e >>= 1
         m = m * m % n
     return reste
-
-def exporapide(a,n):
-    """
-    Fonction permettant le calcul de puissance à l'aide de la récursivité basée sur l'algo d'exponentiation rapide
-    :param a -> base
-    :param n -> exposant
-    :return -> a**n
-    """
-    if n == 1:
-        return a
-    elif n%2==0:
-        return exporapide(a*a,n/2)
-    else:
-        return a*exporapide(a*a,(n-1)/2)
-
 
 def calculClePrivee():
     """
@@ -113,7 +124,8 @@ def intToUtf8(m):
 def parcoursListe(liste, exposant, clePublique):
     messageFinal= ""
     for i in liste:
-        m = expoRapide(i,exposant,clePublique)#exporapide(i,exposant)%clePublique
+        m = exporapide(i,exposant,clePub)
+        #m = expoRapide(i,exposant,clePublique)
         #m = pow(i, exposant, clePublique)
         # code = m.to_bytes(4, 'little')
         # mess = code.decode("UTF-8")

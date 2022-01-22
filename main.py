@@ -116,15 +116,26 @@ def calculClePrivee():
     return d
 
 def intToUtf8(m):
+    """
+    Fonction qui converti un int en string au format UTF-8
+    :param m: Un entier
+    :return: l'entier décoder au format UTF-8
+    """
     m = str(hex(m)[2:]) # Prendre à partir du deuxiÃ¨me caractÃ¨re (aprÃ¨s le 0x)
     m = "".join(reversed([m[i:i+2] for i in range(0, len(m), 2)])) # Inversion des octets 0x20654A ==> 0x4A6520
     m = codecs.decode(m,"hex").decode('utf-8') # DÃ©codage
     return m
 
 def parcoursListe(liste, exposant, clePublique):
+    """
+    Fonction qui converti la liste initiale en message string
+    :param liste: la liste initiale du message
+    :param exposant: l'exposant calculer via la clé privée
+    :param clePublique: la clée publique
+    """
     messageFinal= ""
     for i in liste:
-        m = exporapide(i,exposant,clePub)
+        m = exporapide(i,exposant,clePublique)
         #m = expoRapide(i,exposant,clePublique)
         #m = pow(i, exposant, clePublique)
         # code = m.to_bytes(4, 'little')
